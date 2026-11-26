@@ -1,0 +1,23 @@
+<h1 class="sr"><%= config.title %></h1>
+<% const featured = (theme.series || [])[0]; if (featured && page.current === 1) {
+  const stops = series_stops(featured); const done = stops.filter(s => s.url).length %>
+<section class="feature" aria-labelledby="feature-title">
+  <div class="hero">
+    <% if (featured.cover) { %><img src="<%- url_for(featured.cover) %>" alt="<%= featured.cover_alt || '' %>" width="1440" height="720" fetchpriority="high"><% } %>
+    <div class="scrim"></div>
+    <% if (featured.cover_credit) { %><span class="credit"><%= featured.cover_credit %></span><% } %>
+    <div class="cap">
+      <h2 id="feature-title"><a href="<%- url_for('/series/') %>"><%= featured.name %></a></h2>
+      <% if (featured.description) { %><p><%= featured.description %></p><% } %>
+    </div>
+  </div>
+  <ol class="route" aria-label="系列路线，已更新 <%= done %> 站，共 <%= stops.length %> 站" style="--done:<%= done %>;--total:<%= stops.length %>">
+    <% stops.forEach(s => { %>
+    <li class="stop<%= s.url ? ' done' : '' %>"><% if (s.url) { %><a href="<%- s.url %>"><%= s.title %></a><% } else { %><span><%= s.title %></span><% } %><small><%= s.url ? '已更新' : '计划中' %></small></li>
+    <% }) %>
+  </ol>
+</section>
+<% } %>
+<div class="list-head"><h2><%= page.current === 1 ? '最新文章' : '更早的文章' %></h2><span>共 <%= site.posts.length %> 篇</span></div>
+<% page.posts.each(post => { %><%- partial('_partial/post-item', { post }) %><% }) %>
+<%- partial('_partial/pagination') %>

@@ -1,0 +1,44 @@
+<%
+  const so = series_of(page)
+  const cat = page.categories && page.categories.length ? page.categories.first() : null
+  const t = toc(page.content, { list_number: false, max_depth: 3 })
+  let stops = null
+  if (so) stops = series_stops(so.series)
+%>
+<% if (page.cover) { %>
+<figure class="cover">
+  <img src="<%- url_for(page.cover) %>" alt="<%= page.cover_alt || '' %>" width="1200" height="514" fetchpriority="high">
+  <% if (page.cover_credit) { %><figcaption class="credit"><%= page.cover_credit %></figcaption><% } %>
+</figure>
+<% } %>
+<nav class="crumb" aria-label="面包屑"><a href="<%- url_for('/') %>">首页</a><% if (cat) { %> / <a href="<%- url_for(cat.path) %>"><%= cat.name %></a><% } %></nav>
+<article class="article">
+  <h1><%= page.title %></h1>
+  <div class="meta">
+    <span>发布于 <time datetime="<%= date_xml(page.date) %>"><%= date(page.date, 'YYYY-MM-DD') %></time></span>
+    <% if (page.updated && date(page.updated, 'YYYY-MM-DD') !== date(page.date, 'YYYY-MM-DD')) { %><span>更新于 <%= date(page.updated, 'YYYY-MM-DD') %></span><% } %>
+    <% if (cat) { %><a class="cat" href="<%- url_for(cat.path) %>"><%= cat.name %></a><% } %>
+    <span><%= word_count(page.content) %></span>
+  </div>
+  <% if (so) { %>
+  <a class="series-chip" href="<%- url_for('/series/') %>">
+    <%- icon('series') %><span>系列「<%= so.series.name %>」第 <%= so.index + 1 %> 站 · 共 <%= stops.length %> 站</span>
+    <span class="ticks" aria-hidden="true"><% stops.forEach((s, i) => { %><i class="<%= i === so.index ? 'here' : (s.url ? 'on' : '') %>"></i><% }) %></span>
+  </a>
+  <% } %>
+  <% if (t) { %><details class="mtoc"><summary>本页目录</summary><nav class="toc-wrap" aria-label="本页目录"><%- t %></nav></details><% } %>
+  <div class="prose post-body"><%- page.content %></div>
+  <% if (page.tags && page.tags.length) { %>
+  <div class="after"><span>标签</span><div class="tags"><% page.tags.each(tag => { %><a href="<%- url_for(tag.path) %>"><%= tag.name %></a><% }) %></div></div>
+  <% } %>
+  <nav class="pager" aria-label="<%= so ? '系列内翻页' : '文章翻页' %>">
+  <% if (so) {
+       const prev = stops[so.index - 1], next = stops[so.index + 1] %>
+    <% if (prev && prev.url) { %><a href="<%- prev.url %>"><small>上一站</small><%= prev.post.title %></a><% } else { %><span></span><% } %>
+    <% if (next && next.url) { %><a class="right" href="<%- next.url %>"><small>下一站</small><%= next.post.title %></a><% } else if (next) { %><div class="todo right"><small>下一站</small><%= next.title %> · 计划中</div><% } else { %><div class="todo right"><small>系列完结</small>感谢阅读</div><% } %>
+  <% } else { %>
+    <% if (page.next) { %><a href="<%- url_for(page.next.path) %>"><small>上一篇</small><%= page.next.title %></a><% } else { %><span></span><% } %>
+    <% if (page.prev) { %><a class="right" href="<%- url_for(page.prev.path) %>"><small>下一篇</small><%= page.prev.title %></a><% } %>
+  <% } %>
+  </nav>
+</article>

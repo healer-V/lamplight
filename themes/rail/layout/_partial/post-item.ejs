@@ -1,0 +1,14 @@
+<% const cat = post.categories && post.categories.length ? post.categories.first() : null %>
+<article class="post<%= post.cover ? '' : ' no-thumb' %>">
+  <div>
+    <h3><a href="<%- url_for(post.path) %>"><%= post.title %></a></h3>
+    <% const ex = strip_html(post.excerpt || post.content).trim() %>
+    <% if (ex) { %><p><%= ex.slice(0, 160) %></p><% } %>
+    <div class="meta">
+      <time datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'YYYY-MM-DD') %></time>
+      <% if (cat) { %><a class="cat" href="<%- url_for(cat.path) %>"><%= cat.name %></a><% } else { %><span>未分类</span><% } %>
+      <span><%= word_count(post.content) %></span>
+    </div>
+  </div>
+  <% if (post.cover) { %><a class="thumb" href="<%- url_for(post.path) %>" tabindex="-1" aria-hidden="true"><img src="<%- url_for(post.cover) %>" alt="" loading="lazy" width="400" height="250"></a><% } %>
+</article>

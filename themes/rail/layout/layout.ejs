@@ -1,0 +1,34 @@
+<%
+  let pageTitle = config.title
+  if (is_post() || (page.title && !is_home())) pageTitle = page.title + ' | ' + config.title
+  else if (is_tag()) pageTitle = '标签：' + page.tag + ' | ' + config.title
+  else if (is_category()) pageTitle = '分类：' + page.category + ' | ' + config.title
+  else if (is_archive()) pageTitle = '归档 | ' + config.title
+  const desc = is_post() && page.excerpt ? strip_html(page.excerpt).trim().slice(0, 120) : config.description
+%>
+<!doctype html>
+<html lang="<%= config.language %>">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= pageTitle %></title>
+<meta name="description" content="<%= desc %>">
+<meta name="theme-color" content="#f7f3ec" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1f1c18" media="(prefers-color-scheme: dark)">
+<% if (theme.rss) { %><link rel="alternate" type="application/atom+xml" href="<%- url_for(theme.rss) %>" title="<%= config.title %>"><% } %>
+<script>(()=>{try{const s=localStorage.getItem('theme');const d=s?s==='dark':matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.dataset.theme='dark'}catch(e){}})()</script>
+<%- css('css/style') %>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<%- partial('_partial/topbar') %>
+<div class="app">
+  <%- partial('_partial/sidebar') %>
+  <main id="main"><%- body %><%- partial('_partial/footer') %></main>
+  <aside class="rail" aria-label="侧栏"><%- partial(is_post() ? '_partial/rail-post' : '_partial/rail-home') %></aside>
+</div>
+<%- partial('_partial/search') %>
+<script>window.RAIL={search:'<%- url_for("search.json") %>'}</script>
+<%- js('js/main') %>
+</body>
+</html>

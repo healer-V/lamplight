@@ -1,0 +1,16 @@
+<% const so = is_post() ? series_of(page) : null; const drawerSeries = so ? so.series : (theme.series || [])[0] %>
+<header class="topbar">
+  <%- partial('_partial/brand') %>
+  <button type="button" class="icon-btn sp" aria-label="搜索" data-search-open><%- icon('search') %></button>
+  <%- partial('_partial/theme-btn') %>
+  <button type="button" class="icon-btn" aria-label="打开菜单" aria-expanded="false" aria-controls="drawer" data-menu><%- icon('menu') %></button>
+  <span class="bar" aria-hidden="true"><i data-progress-bar></i></span>
+</header>
+<div class="drawer" id="drawer">
+  <div class="mask" data-close></div>
+  <div class="panel" role="dialog" aria-modal="true" aria-label="站点菜单">
+    <button type="button" class="icon-btn close" aria-label="关闭菜单" data-close><%- icon('close') %></button>
+    <%- partial('_partial/nav') %>
+    <% if (drawerSeries) { %><section class="block"><%- partial('_partial/metro', { series: drawerSeries, hereIndex: so ? so.index : -1 }) %></section><% } %>
+  </div>
+</div>

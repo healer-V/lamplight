@@ -1,0 +1,8 @@
+<dialog class="search" id="search" aria-label="搜索文章">
+  <form method="dialog" class="search-box" role="search">
+    <%- icon('search') %>
+    <input type="search" placeholder="搜索标题和正文" aria-label="搜索关键词" autocomplete="off" data-search-input>
+    <button type="submit" class="esc" aria-label="关闭搜索">Esc</button>
+  </form>
+  <div class="search-results" data-search-results aria-live="polite"><p class="hint">输入关键词开始搜索</p></div>
+</dialog>

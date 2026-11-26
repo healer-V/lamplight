@@ -1,0 +1,22 @@
+# Rail 主题的站点配置（会覆盖 themes/rail/_config.yml 中的同名项）
+
+# 头像：替换成你自己的图片，放在 source/images/ 下
+avatar: /images/2026-11-25_post-01-cover.jpg
+
+# 首页顶部展示的系列，以及“专栏”页列出的所有系列
+series:
+  - name: 前端转全栈从 0 到 1
+    short: 前端转全栈
+    description: 用前端熟悉的 JavaScript，一步步写出接口、接入数据库、完成全栈应用。
+    cover: /images/2026-11-25_series-cover.jpg
+    cover_alt: 穿过绿色树林延伸向远方的铁轨
+    cover_credit: 摄影 Antoine Beauvillain · Unsplash
+    # 每一站对应一篇文章；slug 是文章文件名去掉日期后的部分，留空表示计划中
+    stops:
+      - title: 第一个 API
+        slug: frontend-to-fullstack-01
+      - title: 数据库与 SQL
+        slug: frontend-to-fullstack-02
+      - title: 用户与鉴权
+      - title: TS 与工程化
+      - title: 部署上线

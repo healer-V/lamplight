@@ -1,0 +1,16 @@
+<header class="page-head"><h1><%= page.title || '专栏' %></h1><p class="count">按顺序读完一个系列，从入门走到能独立完成。</p></header>
+<% (theme.series || []).forEach(s => { const stops = series_stops(s); const done = stops.filter(x => x.url).length %>
+<section class="series-card">
+  <% if (s.cover) { %><img src="<%- url_for(s.cover) %>" alt="<%= s.cover_alt || '' %>" loading="lazy" width="1440" height="720"><% } %>
+  <div class="body">
+    <h2><%= s.name %></h2>
+    <% if (s.description) { %><p><%= s.description %></p><% } %>
+    <p class="count"><%= done %> / <%= stops.length %> 站已更新</p>
+    <ol class="stations">
+      <% stops.forEach((st, i) => { %>
+      <li class="<%= st.url ? 'done' : '' %>"><span class="n"><%= i + 1 %></span><% if (st.url) { %><a href="<%- st.url %>"><%= st.post.title %></a><% } else { %><span><%= st.title %></span><small>计划中</small><% } %></li>
+      <% }) %>
+    </ol>
+  </div>
+</section>
+<% }) %>

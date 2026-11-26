@@ -1,0 +1,14 @@
+<% const featured = (theme.series || [])[0] %>
+<% if (featured) { %><section class="block"><%- partial('_partial/metro', { series: featured, hereIndex: -1 }) %></section><% } %>
+<section class="block recent">
+  <h2>最近更新</h2>
+  <% site.posts.sort('-date').limit(5).each(p => { %>
+  <a href="<%- url_for(p.path) %>"><%= p.title %><small><%= date(p.date, 'YYYY-MM-DD') %></small></a>
+  <% }) %>
+</section>
+<% if (site.tags.length) { %>
+<section class="block">
+  <h2>标签</h2>
+  <div class="tags"><% site.tags.sort('-length').each(t => { %><a href="<%- url_for(t.path) %>"><%= t.name %></a><% }) %></div>
+</section>
+<% } %>

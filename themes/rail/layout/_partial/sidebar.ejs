@@ -1,0 +1,9 @@
+<aside class="side">
+  <%- partial('_partial/brand') %>
+  <button type="button" class="search-btn" data-search-open><%- icon('search') %>搜索文章<kbd>⌘K</kbd></button>
+  <%- partial('_partial/nav') %>
+  <div class="side-foot">
+    <%- partial('_partial/theme-btn') %>
+    <% if (theme.rss) { %><a class="icon-btn" href="<%- url_for(theme.rss) %>" aria-label="RSS 订阅"><%- icon('rss') %></a><% } %>
+  </div>
+</aside>

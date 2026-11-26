@@ -1,0 +1,15 @@
+<%
+  const stops = series_stops(series)
+  const done = stops.filter(s => s.url).length
+  const here = (typeof hereIndex === 'number') ? hereIndex : -1
+%>
+<h2><%= series.short || series.name %> · <%= done %>/<%= stops.length %> 已更新</h2>
+<ol class="metro">
+  <% stops.forEach((s, i) => { %>
+  <li class="<%= s.url ? 'done' : '' %><%= i === here ? ' here' : '' %>"<% if (i === here) { %> aria-current="step"<% } %>>
+    <span class="dot" aria-hidden="true"></span>
+    <% if (s.url && i !== here) { %><a href="<%- s.url %>"><%= s.title %></a><% } else { %><%= s.title %><% } %>
+    <span class="state"><%= i === here ? '正在阅读' : (s.url ? '已更新' : '计划中') %></span>
+  </li>
+  <% }) %>
+</ol>

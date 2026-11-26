@@ -1,0 +1,14 @@
+<%
+  let title = '归档', sub = ''
+  if (is_category()) { title = page.category; sub = '分类' }
+  else if (is_tag()) { title = page.tag; sub = '标签' }
+  let lastYear = null
+%>
+<header class="page-head"><% if (sub) { %><p class="sub"><%= sub %></p><% } %><h1><%= title %></h1><p class="count">共 <%= page.posts.length %> 篇文章</p></header>
+<div class="timeline">
+<% page.posts.each(post => { const y = date(post.date, 'YYYY') %>
+  <% if (y !== lastYear) { lastYear = y %><h2 class="year"><%= y %></h2><% } %>
+  <a class="row" href="<%- url_for(post.path) %>"><time datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MM-DD') %></time><span><%= post.title %></span></a>
+<% }) %>
+</div>
+<%- partial('_partial/pagination') %>

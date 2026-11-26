@@ -1,0 +1,23 @@
+# 侧边栏菜单；icon 可选 list / series / tag / archive / user
+menu:
+  - name: 文章
+    path: /
+    icon: list
+  - name: 专栏
+    path: /series/
+    icon: series
+  - name: 标签
+    path: /tags/
+    icon: tag
+  - name: 归档
+    path: /archives/
+    icon: archive
+  - name: 关于
+    path: /about/
+    icon: user
+
+avatar:
+rss: /atom.xml
+# 页脚的图片来源说明，留空则不显示
+image_credit: 图片来自 <a href="https://unsplash.com">Unsplash</a>
+series: []

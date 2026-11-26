@@ -1,0 +1,4 @@
+<a class="brand" href="<%- url_for('/') %>">
+  <% if (theme.avatar) { %><img class="avatar" src="<%- url_for(theme.avatar) %>" alt="" width="46" height="46"><% } else { %><span class="avatar mono" aria-hidden="true"><%= (config.author || config.title).slice(0, 1) %></span><% } %>
+  <span><b><%= config.title %></b><% if (config.subtitle) { %><small><%= config.subtitle %></small><% } %></span>
+</a>

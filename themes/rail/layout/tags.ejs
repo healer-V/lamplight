@@ -1,0 +1,4 @@
+<header class="page-head"><h1><%= page.title || '标签' %></h1><p class="count">共 <%= site.tags.length %> 个标签</p></header>
+<div class="tag-cloud">
+<% site.tags.sort('name').each(t => { %><a href="<%- url_for(t.path) %>"><%= t.name %><span><%= t.length %></span></a><% }) %>
+</div>
